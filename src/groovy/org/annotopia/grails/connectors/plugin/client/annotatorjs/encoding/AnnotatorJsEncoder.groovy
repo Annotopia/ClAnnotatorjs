@@ -65,30 +65,30 @@ class AnnotatorJsEncoder implements IOpenAnnotationJsonEncoder {
 		Resource annotationUri = ResourceFactory.createResource("http://example.org/annotation/" + json.id);
 		try {
 			Model model = ModelFactory.createDefaultModel();
-				// Annotation type
-				addStatement(model, annotationUri, IRdfVocabulary.PROPERTY_TYPE_URI, IOpenAnnotation.CLASS_ANNOTATION_URI);
-				
-				// Annotation body
-				Resource bodyUri = ResourceFactory.createResource("http://example.org/body/" + json.id);
-				createTextualBody(model, annotationUri, bodyUri, json.text);
-				
-				// Annotation target
-				Resource targetUri = ResourceFactory.createResource("http://example.org/target/" + json.id);
-				addStatement(model, annotationUri, IOpenAnnotation.PROPERTY_HASTARGET_URI, targetUri);
-				addStatement(model, targetUri, IRdfVocabulary.PROPERTY_TYPE_URI, IOpenAnnotation.CLASS_SPECIFICRESOURCE_URI);
-				addStatement(model, targetUri, IOpenAnnotation.PROPERTY_HASSOURCE_URI, json.uri);
-				
-				// Annotation target selector
-				for(int i=0; i<json.ranges.size(); i++) {
-					Resource selectorUri = ResourceFactory.createResource("http://example.org/selector/" + json.id + "_" + i);
-					addStatement(model, targetUri, IOpenAnnotation.PROPERTY_HASSELECTOR_URI, selectorUri);
-					addStatement(model, selectorUri, IRdfVocabulary.PROPERTY_TYPE_URI, "http://www.annotationframework.org/ns/af#TextPositionSelector");
-					addStatement(model, selectorUri, "http://www.annotationframework.org/ns/af#start", ResourceFactory.createPlainLiteral(json.ranges[i].start));
-					addStatement(model, selectorUri, "http://www.annotationframework.org/ns/af#startOffset", ResourceFactory.createPlainLiteral(Integer.toString(json.ranges[i].startOffset)));
-					addStatement(model, selectorUri, "http://www.annotationframework.org/ns/af#end", ResourceFactory.createPlainLiteral(json.ranges[i].end));
-					addStatement(model, selectorUri, "http://www.annotationframework.org/ns/af#endOffset", ResourceFactory.createPlainLiteral(Integer.toString(json.ranges[i].endOffset)));
-				}						
-				return model;
+			// Annotation type
+			addStatement(model, annotationUri, IRdfVocabulary.PROPERTY_TYPE_URI, IOpenAnnotation.CLASS_ANNOTATION_URI);
+			
+			// Annotation body
+			Resource bodyUri = ResourceFactory.createResource("http://example.org/body/" + json.id);
+			createTextualBody(model, annotationUri, bodyUri, json.text);
+			
+			// Annotation target
+			Resource targetUri = ResourceFactory.createResource("http://example.org/target/" + json.id);
+			addStatement(model, annotationUri, IOpenAnnotation.PROPERTY_HASTARGET_URI, targetUri);
+			addStatement(model, targetUri, IRdfVocabulary.PROPERTY_TYPE_URI, IOpenAnnotation.CLASS_SPECIFICRESOURCE_URI);
+			addStatement(model, targetUri, IOpenAnnotation.PROPERTY_HASSOURCE_URI, json.uri);
+			
+			// Annotation target selector
+			for(int i=0; i<json.ranges.size(); i++) {
+				Resource selectorUri = ResourceFactory.createResource("http://example.org/selector/" + json.id + "_" + i);
+				addStatement(model, targetUri, IOpenAnnotation.PROPERTY_HASSELECTOR_URI, selectorUri);
+				addStatement(model, selectorUri, IRdfVocabulary.PROPERTY_TYPE_URI, "http://www.annotationframework.org/ns/af#TextPositionSelector");
+				addStatement(model, selectorUri, "http://www.annotationframework.org/ns/af#start", ResourceFactory.createPlainLiteral(json.ranges[i].start));
+				addStatement(model, selectorUri, "http://www.annotationframework.org/ns/af#startOffset", ResourceFactory.createPlainLiteral(Integer.toString(json.ranges[i].startOffset)));
+				addStatement(model, selectorUri, "http://www.annotationframework.org/ns/af#end", ResourceFactory.createPlainLiteral(json.ranges[i].end));
+				addStatement(model, selectorUri, "http://www.annotationframework.org/ns/af#endOffset", ResourceFactory.createPlainLiteral(Integer.toString(json.ranges[i].endOffset)));
+			}						
+			return model;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

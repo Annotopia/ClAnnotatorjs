@@ -20,10 +20,13 @@
  */
 package org.annotopia.grails.connectors.plugin.client.annotatorjs.services
 
+import groovy.sql.DataSet
+
 import org.annotopia.grails.connectors.plugin.client.annotatorjs.encoding.AnnotatorJsEncoder
 import org.annotopia.grails.connectors.plugin.client.annotatorjs.encoding.IOpenAnnotationJsonEncoder
 import org.codehaus.groovy.grails.web.json.JSONObject
 
+import com.hp.hpl.jena.query.Dataset
 import com.hp.hpl.jena.rdf.model.Model
 
 
@@ -36,6 +39,7 @@ import com.hp.hpl.jena.rdf.model.Model
 class AnnotatorJsEncoderService implements IOpenAnnotationJsonEncoder {
 
 	def iTripleStorePersistence;
+	
 	
 	@Override
 	public Model encode(JSONObject json) {
